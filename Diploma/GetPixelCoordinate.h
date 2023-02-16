@@ -4,7 +4,7 @@
 #include "Rotate.h"
 
 Coordinate3D GetPixelCoordinate(
-	const Camera& camera,
+	Camera camera,
 	const Pixel& pixel)
 {
 	Coordinate3D pixel_coordinate =
@@ -27,5 +27,4 @@ Coordinate3D GetPixelCoordinate(
 	pixel_coordinate.z += camera.position.z;
 
 	return pixel_coordinate;
-
 }

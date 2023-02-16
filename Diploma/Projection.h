@@ -3,7 +3,7 @@
 #include "Structures.h"
 
 Coordinate2D Projection(
-	const Camera& camera,
+	Camera camera,
 	Coordinate3D& pixel_coordinate)
 {
 	Coordinate3D pixel_coordinate_on_plane = { 0, 0, 0 };

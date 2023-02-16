@@ -38,9 +38,9 @@ void Rotate(
 	case Z:
 		coordinate = 
 		{
-			cos(angle)* coordinate.x -
+			cos(angle) * coordinate.x -
 			sin(angle) * coordinate.y,
-			sin(angle)* coordinate.x + 
+			sin(angle) * coordinate.x + 
 			cos(angle) * coordinate.y,
 			coordinate.z
 		};
