@@ -11,16 +11,16 @@ Coordinate3D GetPixelCoordinate(
 	{
 		camera.focal_length,
 		camera.matrix_size.width *
-		(camera.image_size.width / 2 - pixel.horizontal) /
+		int(camera.image_size.width / 2 - pixel.horizontal) /
 		camera.image_size.width,
 		camera.matrix_size.height *
-		(camera.image_size.height / 2 - pixel.vertical) /
+		int(camera.image_size.height / 2 - pixel.vertical) /
 		camera.image_size.height
 	};
 
-	Rotate(Z, pixel_coordinate, camera.orientation.yaw);
-	Rotate(Y, pixel_coordinate, camera.orientation.pitch);
-	Rotate(X, pixel_coordinate, camera.orientation.roll);
+	pixel_coordinate = Rotate(Z, pixel_coordinate, camera.orientation.yaw);
+	pixel_coordinate = Rotate(Y, pixel_coordinate, camera.orientation.pitch);
+	pixel_coordinate = Rotate(X, pixel_coordinate, camera.orientation.roll);
 
 	pixel_coordinate.x += camera.position.x;
 	pixel_coordinate.y += camera.position.y;

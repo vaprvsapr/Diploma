@@ -8,7 +8,7 @@ enum Axis
 	X, Y, Z
 };
 
-void Rotate(
+Coordinate3D Rotate(
 	Axis axis,
 	Coordinate3D& coordinate, 
 	const double& angle)
@@ -16,7 +16,7 @@ void Rotate(
 	switch (axis)
 	{
 	case X:
-		coordinate =
+		return
 		{
 			coordinate.x,
 			cos(angle) * coordinate.y -
@@ -26,7 +26,7 @@ void Rotate(
 		};
 		break;
 	case Y:
-		coordinate =
+		return
 		{
 			cos(angle) * coordinate.x +
 			sin(angle) * coordinate.z,
@@ -36,7 +36,7 @@ void Rotate(
 		};
 		break;
 	case Z:
-		coordinate = 
+		return 
 		{
 			cos(angle) * coordinate.x -
 			sin(angle) * coordinate.y,
@@ -48,11 +48,11 @@ void Rotate(
 	}
 }
 
-void RotateZ(
+Coordinate2D RotateZ(
 	Coordinate2D& coordinate, 
 	const double& angle)
 {
-	coordinate =
+	return
 	{
 		cos(-angle) * coordinate.x -
 		sin(-angle) * coordinate.y,

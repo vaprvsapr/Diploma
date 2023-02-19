@@ -1,4 +1,4 @@
-#pragma 
+#pragma once
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -17,6 +17,11 @@ struct Coordinate3D
 	double y;
 	double z;
 };
+
+bool operator==(const Coordinate3D& lhs, const Coordinate3D& rhs)
+{
+	return make_tuple(lhs.x, lhs.y, lhs.z) == make_tuple(rhs.x, rhs.y, rhs.z);
+}
 
 struct Coordinate2D
 {
@@ -84,6 +89,6 @@ struct Camera
 		};
 		focal_length = 
 			_matrix_size.width / 2 / 
-			tan(_field_of_view.horizontal);
+			tan(_field_of_view.horizontal / 2);
 	}
 };

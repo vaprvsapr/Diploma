@@ -35,6 +35,4 @@ cv::Mat GetTransformedImage(
 	RotateZ(top_right, camera.orientation.yaw);
 	RotateZ(bottom_left, camera.orientation.yaw);
 	RotateZ(bottom_right, camera.orientation.yaw);
-
-
 }
