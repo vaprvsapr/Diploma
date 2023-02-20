@@ -8,8 +8,14 @@ using namespace std;
 
 int main()
 {
+	string img_path = "C:/Users/Mi/Pictures/Blender/sequential_big/x-1000y0z1000r0p60y0.png";
+	{
+		LOG_DURATION("imread");
+		cv::Mat img = cv::imread("C:/Users/Mi/Pictures/Blender/sequential_big/x-1000y0z1000r0p60y0.png", cv::IMREAD_COLOR);
+	}
+	LOG_DURATION("total");
 
-	cv::Mat img = cv::imread("C:/Users/Mi/Pictures/Blender/sequential_big/x-1000y0z1000r0p60y0.png", cv::IMREAD_COLOR);
+	cv::Mat img = cv::imread(img_path, cv::IMREAD_COLOR);
 
 	Camera cam =
 	{
@@ -20,17 +26,25 @@ int main()
 		FieldOfView{0.39, 0.69}
 	};
 
-	cout << cam.focal_length << endl;
-
 	cv::Mat new_img;
 	{
 		LOG_DURATION("GetTransformedImage");
 		new_img = GetTransformedImage(cam, 1000);
 	}
-	
 
 	{
 		LOG_DURATION("cv::imwrite");
 		cv::imwrite("C:/Users/Mi/Pictures/Blender/res/res.png", new_img);
 	}
 }
+
+//Debug
+//imread: 1774
+//GetTransformedImage : 3789
+//cv::imwrite : 176
+//total : 5125
+
+//Relea
+//GetTransformedImage : 1338
+//cv::imwrite : 73
+//total : 1745

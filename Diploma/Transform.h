@@ -36,11 +36,6 @@ cv::Mat GetTransformedImage(
 	RotateZ(bottom_left, camera.orientation.yaw);
 	RotateZ(bottom_right, camera.orientation.yaw);
 
-	//cout << "tl: " << top_left.x << " " << top_left.y
-	//	<< "\ntr: " << top_right.x << " " << top_right.y
-	//	<< "\nbl: " << bottom_left.x << " " << bottom_left.y
-	//	<< "\nbr: " << bottom_right.x << " " << bottom_right.y << endl;
-
 	double
 		x_min = min({ top_left.x, top_right.x,
 			bottom_left.x, bottom_right.x }),
@@ -51,18 +46,10 @@ cv::Mat GetTransformedImage(
 		y_max = max({ top_left.y, top_right.y,
 			bottom_left.y, bottom_right.y }) - y_min;
 
-	cout << "x_min:" << x_min
-		<< ", x_max:" << x_max
-		<< ", y_min:" << y_min
-		<< ", y_max:" << y_max << endl;
-
 	ImageSize new_image_size = {
 		new_x_image_size,
 		size_t(new_x_image_size / x_max * y_max)
 	};
-
-	cout << "new_height: " << new_x_image_size << " , new_width: "
-		<< new_image_size.width << endl;
 
 	cv::Mat new_image = cv::Mat::zeros(new_image_size.height,
 		new_image_size.width, CV_8UC3);
@@ -79,25 +66,17 @@ cv::Mat GetTransformedImage(
 			pixel.y -= y_min;
 			
 			Pixel new_pixel = {
-				size_t(int(new_image_size.height) -
+				size_t(int(new_image_size.height - 1) -
 				pixel.x / x_max * (new_image_size.height - 1)),
-				size_t(int(new_image_size.width) -
+				size_t(int(new_image_size.width - 1) -
 				pixel.y / y_max * (new_image_size.width - 1))
 			};
-
-			//cout << "pixel_x:" << pixel.x 
-			//	<< ", pixel_y:" << pixel.y 
-			//	<< ", i:" << i << ", j:" << j 
-			//	<< ", npv:" << new_pixel.vertical 
-			//	<< ", nph:" << new_pixel.horizontal << "\n";
 
 			new_image.at<cv::Vec3b>(
 				new_pixel.vertical,
 				new_pixel.horizontal
 				) =
 				camera.image.at<cv::Vec3b>(i, j);
-		
-
 		}
 	}
 			return new_image;
