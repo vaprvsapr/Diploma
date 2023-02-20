@@ -18,10 +18,10 @@ Coordinate3D GetPixelCoordinate(
 		camera.image_size.height
 	};
 
-	pixel_coordinate = Rotate(Z, pixel_coordinate, camera.orientation.yaw);
-	pixel_coordinate = Rotate(Y, pixel_coordinate, camera.orientation.pitch);
 	pixel_coordinate = Rotate(X, pixel_coordinate, camera.orientation.roll);
-
+	pixel_coordinate = Rotate(Y, pixel_coordinate, camera.orientation.pitch);
+	pixel_coordinate = Rotate(Z, pixel_coordinate, camera.orientation.yaw);
+	
 	pixel_coordinate.x += camera.position.x;
 	pixel_coordinate.y += camera.position.y;
 	pixel_coordinate.z += camera.position.z;
