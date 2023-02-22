@@ -152,19 +152,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ReadImage.cpp" />
-    <ClCompile Include="WriteImage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FindNewImageSize.h" />
+    <ClInclude Include="GetImage.h" />
     <ClInclude Include="GetPixelCoordinate.h" />
+    <ClInclude Include="ImageProjection.h" />
     <ClInclude Include="Test.h" />
+    <ClInclude Include="TestFunctions.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Profile.h" />
     <ClInclude Include="Projection.h" />
-    <ClInclude Include="ReadImage.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Structures.h" />
-    <ClInclude Include="WriteImage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

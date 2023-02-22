@@ -1,8 +1,8 @@
 #pragma once
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc.hpp>
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 
 #include <algorithm>
 
@@ -10,9 +10,7 @@
 #include "GetPixelCoordinate.h"
 #include "Projection.h"
 
-cv::Mat GetTransformedImage(
-	Camera camera,
-	size_t new_x_image_size)
+array<double, 4> FindNewImageSize(const Camera& camera)
 {
 	Coordinate3D
 		top_left_3d = GetPixelCoordinate(camera,
@@ -22,7 +20,7 @@ cv::Mat GetTransformedImage(
 		bottom_left_3d = GetPixelCoordinate(camera,
 			{ camera.image_size.height, 0 }),
 		bottom_right_3d = GetPixelCoordinate(camera,
-			{ camera.image_size.height,  
+			{ camera.image_size.height,
 			camera.image_size.width });
 
 	Coordinate2D
@@ -31,24 +29,37 @@ cv::Mat GetTransformedImage(
 		bottom_left = Projection(camera, bottom_left_3d),
 		bottom_right = Projection(camera, bottom_right_3d);
 
-	RotateZ(top_left, camera.orientation.yaw);
-	RotateZ(top_right, camera.orientation.yaw);
-	RotateZ(bottom_left, camera.orientation.yaw);
-	RotateZ(bottom_right, camera.orientation.yaw);
-
 	double
-		x_min = min({ top_left.x, top_right.x,
+		vertical_min = min({ top_left.x, top_right.x,
 			bottom_left.x, bottom_right.x }),
-		x_max = max({ top_left.x, top_right.x,
-			bottom_left.x, bottom_right.x }) - x_min,
-		y_min = min({ top_left.y, top_right.y,
+		vertical_max = max({ top_left.x, top_right.x,
+			bottom_left.x, bottom_right.x }),
+		horizontal_min = min({ top_left.y, top_right.y,
 			bottom_left.y, bottom_right.y }),
-		y_max = max({ top_left.y, top_right.y,
-			bottom_left.y, bottom_right.y }) - y_min;
+		horizontal_max = max({ top_left.y, top_right.y,
+			bottom_left.y, bottom_right.y });
+
+	return {
+		vertical_min, vertical_max, 
+		horizontal_min, horizontal_max
+	};
+}
+
+cv::Mat TransformImage(
+	const Camera& camera,
+	size_t new_height
+)
+{
+	auto abs_size = FindNewImageSize(camera);
+	double
+		vertical_min = abs_size[0],
+		vertical_delta= abs_size[1] - abs_size[0],
+		horizontal_min = abs_size[2],
+		horizontal_delta = abs_size[3] - abs_size[2];
 
 	ImageSize new_image_size = {
-		new_x_image_size,
-		size_t(new_x_image_size / x_max * y_max)
+		new_height,
+		size_t(new_height / vertical_delta * horizontal_delta)
 	};
 
 	cv::Mat new_image = cv::Mat::zeros(new_image_size.height,
@@ -62,14 +73,16 @@ cv::Mat GetTransformedImage(
 				GetPixelCoordinate(camera, { i, j });
 			Coordinate2D pixel = Projection(camera, pixel3d);
 
-			pixel.x -= x_min;
-			pixel.y -= y_min;
+			pixel.x -= vertical_min;
+			pixel.y -= horizontal_min;
 			
 			Pixel new_pixel = {
 				size_t(int(new_image_size.height - 1) -
-				pixel.x / x_max * (new_image_size.height - 1)),
+				pixel.x / vertical_delta * 
+					(new_image_size.height - 1)),
 				size_t(int(new_image_size.width - 1) -
-				pixel.y / y_max * (new_image_size.width - 1))
+				pixel.y / horizontal_delta *
+					(new_image_size.width - 1))
 			};
 
 			new_image.at<cv::Vec3b>(
@@ -79,7 +92,72 @@ cv::Mat GetTransformedImage(
 				camera.image.at<cv::Vec3b>(i, j);
 		}
 	}
-			return new_image;
-	return {};
+	return new_image;
 }
  
+cv::Mat TransformImages(
+	const vector<Camera> cameras,
+	size_t new_height
+)
+{
+	array<double, 4> abs_size = { 10e9, -10e9, 10e9, -10e9 };
+	for (size_t i = 0; i < cameras.size(); i++)
+	{
+		auto local = FindNewImageSize(cameras[i]);
+		if (local[0] < abs_size[0])
+			abs_size[0] = local[0];
+		if (local[1] > abs_size[1])
+			abs_size[1] = local[1];
+		if (local[2] < abs_size[2])
+			abs_size[2] = local[2];
+		if (local[3] > abs_size[3])
+			abs_size[3] = local[3];
+	}
+
+	double
+		vertical_min = abs_size[0],
+		vertical_delta = abs_size[1] - abs_size[0],
+		horizontal_min = abs_size[2],
+		horizontal_delta = abs_size[3] - abs_size[2];
+
+	ImageSize new_image_size = {
+		new_height,
+		size_t(new_height / vertical_delta * horizontal_delta)
+	};
+
+	cv::Mat new_image = cv::Mat::zeros(new_image_size.height,
+		new_image_size.width, CV_8UC3);
+
+	for (size_t camera_index = 0; camera_index < cameras.size(); camera_index++)
+	{
+		for (size_t i = 0; i < cameras[camera_index].image_size.height; i++)
+		{
+			for (size_t j = 0; j < cameras[camera_index].image_size.width; j++)
+			{
+				Coordinate3D pixel3d =
+					GetPixelCoordinate(cameras[camera_index], {i, j});
+				Coordinate2D pixel_coordinate = Projection(cameras[camera_index], pixel3d);
+
+				pixel_coordinate.x -= vertical_min;
+				pixel_coordinate.y -= horizontal_min;
+
+				Pixel new_pixel = {
+					size_t(int(new_image_size.height - 1) -
+					pixel_coordinate.x / vertical_delta *
+						(new_image_size.height - 1)),
+					size_t(int(new_image_size.width - 1) -
+					pixel_coordinate.y / horizontal_delta *
+						(new_image_size.width - 1))
+				};
+
+				new_image.at<cv::Vec3b>(
+					new_pixel.vertical,
+					new_pixel.horizontal
+					) =
+					cameras[camera_index].image.at<cv::Vec3b>(i, j);
+			}
+		}
+	}
+
+	return new_image;
+}

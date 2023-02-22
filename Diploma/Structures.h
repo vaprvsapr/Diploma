@@ -42,7 +42,7 @@ struct ImageSize
 	size_t width;
 };
 
-struct MatrixSize
+struct Size2D
 {
 	double height;
 	double width;
@@ -63,9 +63,9 @@ struct Pixel
 struct Camera
 {
 	cv::Mat image;
-	MatrixSize matrix_size;
+	Size2D matrix_size;
 	ImageSize image_size;
-	FieldOfView field_of_view;
+	double horizontal_field_of_view;
 	double focal_length;
 
 	Coordinate3D position;
@@ -75,20 +75,23 @@ struct Camera
 		cv::Mat _image,
 		Coordinate3D _position,
 		EulerAngles _orientation,
-		MatrixSize _matrix_size,
-		FieldOfView _field_of_view)
+		double horizontal_field_of_view
+	)
 		: image(_image)
 		, position(_position)
 		, orientation(_orientation)
-		, matrix_size(_matrix_size)
-		, field_of_view(_field_of_view)
+		, horizontal_field_of_view(horizontal_field_of_view)
 	{
 		image_size = {
 			size_t(_image.size().height),
-			size_t(_image.size().width) 
+			size_t(_image.size().width)
+		};
+		matrix_size = {
+			double(image_size.height) / 1000,
+			double(image_size.width) / 1000
 		};
 		focal_length = 
-			_matrix_size.width / 2 / 
-			tan(_field_of_view.horizontal / 2);
+			matrix_size.width / 2 / 
+			tan(horizontal_field_of_view / 2);
 	}
 };
