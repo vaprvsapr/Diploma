@@ -5,6 +5,8 @@
 #include "GetPixelCoordinate.h"
 #include "Projection.h"
 #include "Transform.h"
+#include "WriteReadCamera.h"
+#include "GetCamera.h"
 
 using namespace std;
 
@@ -179,4 +181,46 @@ void ConcatenateImagesWithChangingRoll()
 		LOG_DURATION("cv::imwrite");
 		cv::imwrite(path + "res.png", new_img);
 	}
+}
+
+void TestConcatenate()
+{
+	ReferenceImage ref_img(
+		cv::imread("C:/Users/Mi/source/repos/Diploma/Diploma/resources/img.tif", cv::IMREAD_COLOR),
+		0.02
+	);
+
+	vector<Coordinate3D> positions = {
+		{0, 140, 50},
+		{10, 140, 50},
+		{20, 140, 50},
+		{30, 142.7, 50},
+		{37.3, 150, 50},
+		{40, 160, 50}
+	};
+
+	vector<EulerAngles> orientations = {
+		{0, 3.141592 / 2, 0 },
+		{0, 3.141592 / 2, 0 },
+		{0, 3.141592 / 2, 0 },
+		{0, 3.141592 / 2, -3.141592 / 6},
+		{0, 3.141592 / 2, -3.141592 / 3},
+		{0, 3.141592 / 2, -3.141592 / 2}
+	};
+	double
+		hfov = 3.141592 / 4;
+	ImageSize img_size = { 1080, 1920 };
+
+	string dir_path = "C:/Users/Mi/source/repos/Diploma/Diploma/resources/created_images";
+
+	CreateSetOfImages(
+		ref_img,
+		positions,
+		orientations,
+		hfov,
+		img_size,
+		dir_path
+	);
+
+	ConcatenateImagesInDirectory(dir_path, 0.05);
 }

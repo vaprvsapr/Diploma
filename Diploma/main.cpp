@@ -6,30 +6,42 @@
 #include "TestFunctions.h"
 #include "GetCamera.h"
 #include "WriteReadCamera.h"
+#include "CreateTrajectory.h"
 
 using namespace std;
 
 int main()
 {
-
-	cv::Mat img = cv::imread("C:/Users/Mi/Pictures/Gimp\\img.tif", 
-		cv::IMREAD_COLOR);
-	ReferenceImage ref_img = { img, 0.02 };
-	Camera cam =
-		GetCamera(
-			ref_img,
-			Camera{
-				{ 0, 140, 200 },
-				{ 0, 3.141592 / 3 , 0 },
-				3.141592 / 4,
-				{ 1000, 2000 }
-			}
+	double pitch = 3.141592 / 3;
+	double hfov = 3.141592 / 4;
+	ImageSize img_size = { 1000, 2000 };
+	auto trajectory = CreateTackTrajectory(
+		{ 25, 50 },
+		{ 70, 120 },
+		{ 0.1, 0.2 },
+		pitch,
+		50,
+		hfov,
+		img_size	
 	);
-	WriteCamera(cam, "C:/Users/Mi/Pictures/Gimp");
-	Camera cam1 = ReadCamera("C:/Users/Mi/Pictures/Gimp/CAMERAx0y140z200r0p1.05y0fov0.785.tif");
 
-	auto new_img = TransformImage(cam1, 1000);
-	cv::imwrite("C:/Users/Mi/Pictures/Gimp/result.tif", new_img);
+	ReferenceImage ref_img(
+		cv::imread("C:/Users/Mi/source/repos/Diploma/Diploma/resources/img.tif", cv::IMREAD_COLOR),
+		0.02
+	);
+
+	string dir_path = "C:/Users/Mi/source/repos/Diploma/Diploma/resources/created_images3";
+
+	CreateSetOfImages(
+		ref_img,
+		trajectory.first,
+		trajectory.second,
+		hfov,
+		img_size,
+		dir_path
+	);
+
+	ConcatenateImagesInDirectory(dir_path, 0.05);
 }
 
 

@@ -126,6 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +156,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CreateTrajectory.h" />
     <ClInclude Include="FindNewImageSize.h" />
     <ClInclude Include="GetCamera.h" />
     <ClInclude Include="GetPixelCoordinate.h" />
@@ -166,6 +169,9 @@
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="WriteReadCamera.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Pictures\Gimp\img.tif" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
