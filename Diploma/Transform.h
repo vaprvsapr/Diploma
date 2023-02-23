@@ -24,10 +24,10 @@ array<double, 4> FindNewImageSize(const Camera& camera)
 			camera.image_size.width });
 
 	Coordinate2D
-		top_left = Projection(camera, top_left_3d),
-		top_right = Projection(camera, top_right_3d),
-		bottom_left = Projection(camera, bottom_left_3d),
-		bottom_right = Projection(camera, bottom_right_3d);
+		top_left = Projection(camera.position, top_left_3d),
+		top_right = Projection(camera.position, top_right_3d),
+		bottom_left = Projection(camera.position, bottom_left_3d),
+		bottom_right = Projection(camera.position, bottom_right_3d);
 
 	double
 		vertical_min = min({ top_left.x, top_right.x,
@@ -71,7 +71,7 @@ cv::Mat TransformImage(
 		{
 			Coordinate3D pixel3d =
 				GetPixelCoordinate(camera, { i, j });
-			Coordinate2D pixel = Projection(camera, pixel3d);
+			Coordinate2D pixel = Projection(camera.position, pixel3d);
 
 			pixel.x -= vertical_min;
 			pixel.y -= horizontal_min;
@@ -136,7 +136,7 @@ cv::Mat TransformImages(
 			{
 				Coordinate3D pixel3d =
 					GetPixelCoordinate(cameras[camera_index], {i, j});
-				Coordinate2D pixel_coordinate = Projection(cameras[camera_index], pixel3d);
+				Coordinate2D pixel_coordinate = Projection(cameras[camera_index].position, pixel3d);
 
 				pixel_coordinate.x -= vertical_min;
 				pixel_coordinate.y -= horizontal_min;

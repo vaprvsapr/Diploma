@@ -3,28 +3,28 @@
 #include "Structures.h"
 
 Coordinate2D Projection(
-	Camera camera,
-	Coordinate3D& pixel_coordinate)
+	const Coordinate3D& position,
+	const Coordinate3D& pixel_coordinate)
 {
 	Coordinate3D pixel_coordinate_on_plane = { 0, 0, 0 };
 
-	if (pixel_coordinate.x - camera.position.x == 0)
-		pixel_coordinate_on_plane.x = camera.position.x;
+	if (pixel_coordinate.x - position.x == 0)
+		pixel_coordinate_on_plane.x = position.x;
 	else
 		pixel_coordinate_on_plane.x =
-		(pixel_coordinate_on_plane.z - camera.position.z) /
-		(pixel_coordinate.z - camera.position.z) *
-		(pixel_coordinate.x - camera.position.x) + 
-		camera.position.x;
+		(pixel_coordinate_on_plane.z - position.z) /
+		(pixel_coordinate.z - position.z) *
+		(pixel_coordinate.x - position.x) + 
+		position.x;
 
-	if (pixel_coordinate.y - camera.position.y == 0)
-		pixel_coordinate_on_plane.y = camera.position.y;
+	if (pixel_coordinate.y - position.y == 0)
+		pixel_coordinate_on_plane.y = position.y;
 	else
 		pixel_coordinate_on_plane.y =
-		(pixel_coordinate_on_plane.z - camera.position.z) /
-		(pixel_coordinate.z - camera.position.z) *
-		(pixel_coordinate.y - camera.position.y) + 
-		camera.position.y;
+		(pixel_coordinate_on_plane.z - position.z) /
+		(pixel_coordinate.z - position.z) *
+		(pixel_coordinate.y - position.y) + 
+		position.y;
 
 	return { 
 		pixel_coordinate_on_plane.x, 

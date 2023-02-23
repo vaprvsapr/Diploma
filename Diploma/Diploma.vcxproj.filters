@@ -56,7 +56,10 @@
     <ClInclude Include="TestFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GetImage.h">
+    <ClInclude Include="GetCamera.h">
+      <Filter>Header Files\ImagesCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteReadCamera.h">
       <Filter>Header Files\ImagesCreator</Filter>
     </ClInclude>
   </ItemGroup>

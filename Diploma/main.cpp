@@ -4,12 +4,32 @@
 #include "Projection.h"
 #include "Transform.h"
 #include "TestFunctions.h"
+#include "GetCamera.h"
+#include "WriteReadCamera.h"
 
 using namespace std;
 
 int main()
 {
-	ConcatenateImagesWithChangingRoll();
+
+	cv::Mat img = cv::imread("C:/Users/Mi/Pictures/Gimp\\img.tif", 
+		cv::IMREAD_COLOR);
+	ReferenceImage ref_img = { img, 0.02 };
+	Camera cam =
+		GetCamera(
+			ref_img,
+			Camera{
+				{ 0, 140, 200 },
+				{ 0, 3.141592 / 3 , 0 },
+				3.141592 / 4,
+				{ 1000, 2000 }
+			}
+	);
+	WriteCamera(cam, "C:/Users/Mi/Pictures/Gimp");
+	Camera cam1 = ReadCamera("C:/Users/Mi/Pictures/Gimp/CAMERAx0y140z200r0p1.05y0fov0.785.tif");
+
+	auto new_img = TransformImage(cam1, 1000);
+	cv::imwrite("C:/Users/Mi/Pictures/Gimp/result.tif", new_img);
 }
 
 
