@@ -13,11 +13,8 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\ImagesCreator">
-      <UniqueIdentifier>{e5706eef-72b6-463d-a848-1c0042f178c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ImagesCreator">
-      <UniqueIdentifier>{77752014-9782-432c-8970-e633d0877d88}</UniqueIdentifier>
+    <Filter Include="Header Files\Basic">
+      <UniqueIdentifier>{d02519c7-2430-474b-bf1e-81cd5ecfe150}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,43 +23,46 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Structures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Profile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rotate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Projection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetPixelCoordinate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageProjection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FindNewImageSize.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TestFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GetCamera.h">
-      <Filter>Header Files\ImagesCreator</Filter>
-    </ClInclude>
-    <ClInclude Include="WriteReadCamera.h">
-      <Filter>Header Files\ImagesCreator</Filter>
-    </ClInclude>
     <ClInclude Include="CreateTrajectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rotate.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Projection.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Profile.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="GetPixelCoordinate.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="FindNewImageSize.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="GetCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcatenateImagesInDirectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetSetOfImages.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

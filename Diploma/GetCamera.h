@@ -25,49 +25,11 @@ Camera GetCamera(
 	{
 		for (size_t j = 0; j < camera.image_size.width; j++)
 		{
-			//auto pixel_corners3d = GetPixelCorners(camera, { i, j });
-			//array<Coordinate2D, 4> pixel_corners2d =
-			//{
-			//	Projection(camera.position, pixel_corners3d[0]),
-			//	Projection(camera.position, pixel_corners3d[1]),
-			//	Projection(camera.position, pixel_corners3d[2]),
-			//	Projection(camera.position, pixel_corners3d[3])
-			//double 
-			//	x_max =
-			//	max({
-			//	pixel_corners2d[0].x,
-			//	pixel_corners2d[1].x,
-			//	pixel_corners2d[2].x,
-			//	pixel_corners2d[3].x
-			//		}),
-			//	x_min =
-			//	min({
-			//	pixel_corners2d[0].x,
-			//	pixel_corners2d[1].x,
-			//	pixel_corners2d[2].x,
-			//	pixel_corners2d[3].x
-			//		}),
-			//	y_max =
-			//	max({
-			//	pixel_corners2d[0].y,
-			//	pixel_corners2d[1].y,
-			//	pixel_corners2d[2].y,
-			//	pixel_corners2d[3].y
-			//		}),
-			//	y_min =
-			//	min({
-			//	pixel_corners2d[0].y,
-			//	pixel_corners2d[1].y,
-			//	pixel_corners2d[2].y,
-			//	pixel_corners2d[3].y
-			//		});
-
 			Coordinate3D pixel_coordinate3d = 
 				GetPixelCoordinate(camera, { i, j });
 			Coordinate2D pixel_coordinate2d =
 				Projection(camera.position, pixel_coordinate3d);
 
-			//cout << "i:" << i << ", j:" << j << endl;
 			size_t ref_i = size_t(
 				pixel_coordinate2d.x /
 				reference_image.spatial_resolution);

@@ -156,19 +156,20 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConcatenateImagesInDirectory.h" />
     <ClInclude Include="CreateTrajectory.h" />
     <ClInclude Include="FindNewImageSize.h" />
     <ClInclude Include="GetCamera.h" />
     <ClInclude Include="GetPixelCoordinate.h" />
-    <ClInclude Include="ImageProjection.h" />
-    <ClInclude Include="Test.h" />
+    <ClInclude Include="GetSetOfImages.h" />
+    <ClInclude Include="ReadCamera.h" />
     <ClInclude Include="TestFunctions.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Profile.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Rotate.h" />
     <ClInclude Include="Structures.h" />
-    <ClInclude Include="WriteReadCamera.h" />
+    <ClInclude Include="WriteCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Pictures\Gimp\img.tif" />

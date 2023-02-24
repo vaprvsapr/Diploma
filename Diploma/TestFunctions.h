@@ -5,8 +5,11 @@
 #include "GetPixelCoordinate.h"
 #include "Projection.h"
 #include "Transform.h"
-#include "WriteReadCamera.h"
+#include "WriteCamera.h"
+#include "ReadCamera.h"
 #include "GetCamera.h"
+#include "GetSetOfImages.h"
+#include "ConcatenateImagesInDirectory.h"
 
 using namespace std;
 
@@ -213,7 +216,7 @@ void TestConcatenate()
 
 	string dir_path = "C:/Users/Mi/source/repos/Diploma/Diploma/resources/created_images";
 
-	CreateSetOfImages(
+	GetSetOfImages(
 		ref_img,
 		positions,
 		orientations,

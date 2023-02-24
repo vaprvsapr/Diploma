@@ -124,6 +124,5 @@ cv::Mat TransformImages(
 			}
 		}
 	}
-
 	return new_image;
 }

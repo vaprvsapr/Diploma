@@ -77,6 +77,5 @@ pair<vector<Coordinate3D>, vector<EulerAngles>> CreateTackTrajectory(
 				orientations.push_back({ 0, pitch, 0 });
 		}
 	}
-
 	return make_pair(positions, orientations);
 }
