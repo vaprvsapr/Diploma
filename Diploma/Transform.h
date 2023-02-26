@@ -126,3 +126,93 @@ cv::Mat TransformImages(
 	}
 	return new_image;
 }
+
+cv::Mat TransformImagesDev(
+	vector<Camera> cameras,
+	double spatial_resolution
+)
+{
+	array<double, 4> abs_size = { 10e9, -10e9, 10e9, -10e9 };
+	for (size_t i = 0; i < cameras.size(); i++)
+	{
+		auto local = FindNewImageSize(cameras[i]);
+		if (local[0] < abs_size[0])
+			abs_size[0] = local[0];
+		if (local[1] > abs_size[1])
+			abs_size[1] = local[1];
+		if (local[2] < abs_size[2])
+			abs_size[2] = local[2];
+		if (local[3] > abs_size[3])
+			abs_size[3] = local[3];
+	}
+
+	double
+		vertical_min = abs_size[0],
+		vertical_delta = abs_size[1] - abs_size[0],
+		horizontal_min = abs_size[2],
+		horizontal_delta = abs_size[3] - abs_size[2];
+
+	ImageSize new_image_size = {
+		size_t(vertical_delta / spatial_resolution),
+		size_t(horizontal_delta / spatial_resolution)
+	};
+
+	cv::Mat new_image = cv::Mat::zeros(new_image_size.height,
+		new_image_size.width, CV_8UC3);
+
+	for (size_t camera_index = 0; camera_index < cameras.size(); camera_index++)
+	{
+		size_t
+			height = cameras.back().image_size.height,
+			width = cameras.back().image_size.width;
+		for (size_t k = 0; k < height; k++)
+		{
+			cameras[camera_index].image.at<cv::Vec3b>(k, 0) = {0, 0, 255};
+			cameras[camera_index].image.at<cv::Vec3b>(k, 1) = {0, 0, 255};
+			cameras[camera_index].image.at<cv::Vec3b>(k, width - 1) = {0, 0, 255};
+			cameras[camera_index].image.at<cv::Vec3b>(k, width - 2) = {0, 0, 255};
+		}
+		for (size_t k = 0; k < width; k++)
+		{
+			cameras[camera_index].image.at<cv::Vec3b>(0, k) = { 0, 0, 255 };
+			cameras[camera_index].image.at<cv::Vec3b>(1, k) = { 0, 0, 255 };
+			cameras[camera_index].image.at<cv::Vec3b>(height - 1, k) = { 0, 0, 255 };
+			cameras[camera_index].image.at<cv::Vec3b>(height - 2, k) = { 0, 0, 255 };
+		}
+
+		for (size_t i = 0; i < cameras[camera_index].image_size.height; i++)
+		{
+			for (size_t j = 0; j < cameras[camera_index].image_size.width; j++)
+			{
+				Coordinate3D pixel3d =
+					GetPixelCoordinate(cameras[camera_index], { i, j });
+				Coordinate2D pixel_coordinate = Projection(cameras[camera_index].position, pixel3d);
+
+				pixel_coordinate.x -= vertical_min;
+				pixel_coordinate.y -= horizontal_min;
+
+				Pixel new_pixel = {
+					size_t(int(new_image_size.height - 1) -
+					pixel_coordinate.x / vertical_delta *
+						(new_image_size.height - 1)),
+					size_t(int(new_image_size.width - 1) -
+					pixel_coordinate.y / horizontal_delta *
+						(new_image_size.width - 1))
+				};
+
+				if (new_image.at<cv::Vec3b>(
+					new_pixel.vertical,
+					new_pixel.horizontal)[2] != 255)
+				{
+					new_image.at<cv::Vec3b>(
+						new_pixel.vertical,
+						new_pixel.horizontal
+						) =
+						cameras[camera_index].image.at<cv::Vec3b>(i, j);
+				};
+
+			}
+		}
+	}
+	return new_image;
+}

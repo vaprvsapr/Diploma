@@ -30,7 +30,7 @@ void WriteCamera(Camera camera, const string& directory)
 void WriteCameraWithIndex(Camera camera, const string& directory, const size_t index)
 {
 	stringstream ss;
-	ss << setprecision(3)
+	ss << setprecision(5)
 		<< "x" << camera.position.x
 		<< "y" << camera.position.y
 		<< "z" << camera.position.z

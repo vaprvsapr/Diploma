@@ -41,40 +41,51 @@ pair<vector<Coordinate3D>, vector<EulerAngles>> CreateTackTrajectory(
 
 	Size2D rectangle_size = {
 		abs(top_left.x - bottom_left.x),
-		abs(bottom_left.y - bottom_right.y)
+		abs(bottom_left.y - bottom_right.y) / 2 + abs(top_left.y - top_right.y) / 2
 	};
-	cout << "rectangle_size:" << rectangle_size.height 
-		<< ", " << rectangle_size.width << endl;
 
 	Size2D shift = {
 		rectangle_size.height * (1 - overlap.height),
 		rectangle_size.width * (1 - overlap.width)
 	};
 
-	cout << "shift:" << shift.height << ", " << shift.width << endl;
-
 	size_t n_height = ceil(delta.height / shift.height);
 	size_t n_width = ceil(delta.width / shift.width);
 
-	cout << "n:" << n_height << ", " << n_width << endl;
+	Size2D alignment = {
+		(n_height * shift.height - delta.height) / 2,
+		(n_width * shift.width - delta.width) / 2
+	};
 
 	vector<Coordinate3D> positions;
 	vector<EulerAngles> orientations;
 
-	for (size_t i = 0; i < n_height; i++)
+	for (size_t j = 0; j < n_width; j++)
 	{
-		for (size_t j = 0; j < n_width; j++)
+		for (size_t i = 0; i < n_height; i++)
 		{
-
-				double x = i * shift.height;
-				double y = j * shift.width;
-
+			if ((j % 2) == 0)
+			{
 				positions.push_back({
-					x + initial_point.x + rectangle_size.height / 2 - height / tan(pitch),
-					y + initial_point.y + rectangle_size.width / 2,
-					height });
-
+					initial_point.x + i * shift.height + 
+					height / tan(pitch) - bottom_left.x - alignment.height - height / tan(pitch),
+					initial_point.y + j * shift.width + 
+					rectangle_size.width / 2 - alignment.width,
+					height
+					});
 				orientations.push_back({ 0, pitch, 0 });
+			}
+			if ((j % 2) == 1)
+			{
+				positions.push_back({
+					initial_point.x + delta.height - i * shift.height -
+					height / tan(pitch) + bottom_left.x + alignment.height + height / tan(pitch),
+					initial_point.y + j * shift.width +
+					rectangle_size.width / 2 - alignment.width,
+					height
+					});
+				orientations.push_back({ 0, pitch, 3.141592 });
+			}
 		}
 	}
 	return make_pair(positions, orientations);
