@@ -128,7 +128,7 @@ cv::Mat TransformImages(
 }
 
 cv::Mat TransformImagesDev(
-	vector<Camera> cameras,
+	vector<Camera>& cameras,
 	double spatial_resolution
 )
 {
@@ -165,6 +165,7 @@ cv::Mat TransformImagesDev(
 		size_t
 			height = cameras.back().image_size.height,
 			width = cameras.back().image_size.width;
+
 		for (size_t k = 0; k < height; k++)
 		{
 			cameras[camera_index].image.at<cv::Vec3b>(k, 0) = {0, 0, 255};

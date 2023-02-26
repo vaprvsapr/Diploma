@@ -160,8 +160,9 @@
     <ClInclude Include="CreateTrajectory.h" />
     <ClInclude Include="FindNewImageSize.h" />
     <ClInclude Include="GetCamera.h" />
+    <ClInclude Include="GetNoisy.h" />
     <ClInclude Include="GetPixelCoordinate.h" />
-    <ClInclude Include="GetSetOfImages.h" />
+    <ClInclude Include="CreateSetOfImagesInDir.h" />
     <ClInclude Include="ReadCamera.h" />
     <ClInclude Include="TestFunctions.h" />
     <ClInclude Include="Transform.h" />

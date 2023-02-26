@@ -1,20 +1,23 @@
 #include <iostream>
-#include <sstream>
-#include <filesystem>
-
-using namespace std;
+#include <iomanip>
+#include <string>
+#include <map>
+#include <random>
+#include <cmath>
 
 int main()
 {
-	string dir_path = "C:/Users/Mi/Pictures/Gimp";
-	filesystem::path gimp(dir_path);
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
 
-	cout << gimp << endl;
+    // values near the mean are the most likely
+    // standard deviation affects the dispersion of generated values from the mean
+    std::normal_distribution<> d{ 5, 2 };
 
-	for (auto iter : filesystem::directory_iterator{ gimp })
-	{
-		cout << iter.path() << endl;
+    std::map<int, int> hist{};
+    for (int n = 0; n != 10000; ++n)
+        ++hist[std::round(d(gen))];
 
-	}
+    for (auto elem : hist)
+        std::cout << std::setw(2) << elem.first << ' ' << std::string(elem.second / 200, '*') << '\n';
 }
-	

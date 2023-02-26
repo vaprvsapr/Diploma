@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Basic">
       <UniqueIdentifier>{d02519c7-2430-474b-bf1e-81cd5ecfe150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ImageProcessing">
+      <UniqueIdentifier>{513c8b6f-54b0-4daa-a4ea-f6f209401be7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,7 +65,10 @@
     <ClInclude Include="WriteCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GetSetOfImages.h">
+    <ClInclude Include="CreateSetOfImagesInDir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetNoisy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

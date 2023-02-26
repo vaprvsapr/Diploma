@@ -4,7 +4,7 @@
 #include "GetCamera.h"
 #include "WriteCamera.h"
 
-void GetSetOfImages(
+void CreateSetOfImagesInDir(
 	ReferenceImage reference_image,
 	vector<Coordinate3D> positions,
 	vector<EulerAngles> orientations,

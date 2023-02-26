@@ -11,6 +11,18 @@
 
 using namespace std;
 
+enum Axis
+{
+	X, Y, Z
+};
+
+enum Angle
+{
+	ROLL,
+	PITCH,
+	YAW
+};
+
 struct Coordinate3D
 {
 	double x;

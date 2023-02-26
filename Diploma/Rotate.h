@@ -3,11 +3,6 @@
 #include <cmath>
 #include "Structures.h"
 
-enum Axis
-{
-	X, Y, Z
-};
-
 Coordinate3D Rotate(
 	Axis axis,
 	Coordinate3D& coordinate, 
