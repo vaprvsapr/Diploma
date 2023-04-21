@@ -156,6 +156,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalculateOverlap.h" />
     <ClInclude Include="ConcatenateImagesInDirectory.h" />
     <ClInclude Include="CreateTrajectory.h" />
     <ClInclude Include="FindNewImageSize.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="GetNoisy.h" />
     <ClInclude Include="GetPixelCoordinate.h" />
     <ClInclude Include="CreateSetOfImagesInDir.h" />
+    <ClInclude Include="IsPointInsideATriangle.h" />
     <ClInclude Include="ReadCamera.h" />
     <ClInclude Include="TestFunctions.h" />
     <ClInclude Include="Transform.h" />

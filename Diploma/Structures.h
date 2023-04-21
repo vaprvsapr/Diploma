@@ -119,6 +119,7 @@ struct Camera
 		focal_length = 
 			matrix_size.width / 2 / 
 			tan(horizontal_field_of_view / 2);
+
 	}
 
 	Camera(
@@ -144,6 +145,11 @@ struct Camera
 			image_size.width,
 			CV_8UC3
 		);
+	}
+
+	Camera()
+	{
+
 	}
 };
 

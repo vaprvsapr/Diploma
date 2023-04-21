@@ -19,8 +19,8 @@ Coordinate3D GetPixelCoordinate(
 		camera.image_size.height
 	};
 
-	pixel_coordinate = Rotate(X, pixel_coordinate, camera.orientation.roll);
 	pixel_coordinate = Rotate(Y, pixel_coordinate, camera.orientation.pitch);
+	pixel_coordinate = Rotate(X, pixel_coordinate, camera.orientation.roll);
 	pixel_coordinate = Rotate(Z, pixel_coordinate, camera.orientation.yaw);
 	
 	pixel_coordinate.x += camera.position.x;
@@ -87,10 +87,7 @@ array<Coordinate3D, 4> GetPixelCorners(
 		}
 	};
 
-	pixel_corners[0] = Rotate(X, pixel_corners[0], camera.orientation.roll);
-	pixel_corners[1] = Rotate(X, pixel_corners[1], camera.orientation.roll);
-	pixel_corners[2] = Rotate(X, pixel_corners[2], camera.orientation.roll);
-	pixel_corners[3] = Rotate(X, pixel_corners[3], camera.orientation.roll);
+
 
 	pixel_corners[0] = Rotate(Y, pixel_corners[0], camera.orientation.pitch);
 	pixel_corners[1] = Rotate(Y, pixel_corners[1], camera.orientation.pitch);
@@ -101,6 +98,11 @@ array<Coordinate3D, 4> GetPixelCorners(
 	pixel_corners[1] = Rotate(Z, pixel_corners[1], camera.orientation.yaw);
 	pixel_corners[2] = Rotate(Z, pixel_corners[2], camera.orientation.yaw);
 	pixel_corners[3] = Rotate(Z, pixel_corners[3], camera.orientation.yaw);
+
+	pixel_corners[0] = Rotate(X, pixel_corners[0], camera.orientation.roll);
+	pixel_corners[1] = Rotate(X, pixel_corners[1], camera.orientation.roll);
+	pixel_corners[2] = Rotate(X, pixel_corners[2], camera.orientation.roll);
+	pixel_corners[3] = Rotate(X, pixel_corners[3], camera.orientation.roll);
 
 	pixel_corners[0] = pixel_corners[0] + camera.position;
 	pixel_corners[1] = pixel_corners[1] + camera.position;

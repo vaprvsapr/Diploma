@@ -157,15 +157,18 @@ cv::Mat TransformImagesDev(
 		size_t(horizontal_delta / spatial_resolution)
 	};
 
+	cout << "new_image_size: " << new_image_size.height << " ," << new_image_size.width << endl;
+
 	cv::Mat new_image = cv::Mat::zeros(new_image_size.height,
 		new_image_size.width, CV_8UC3);
 
 	for (size_t camera_index = 0; camera_index < cameras.size(); camera_index++)
 	{
 		size_t
-			height = cameras.back().image_size.height,
-			width = cameras.back().image_size.width;
+			height = cameras[camera_index].image_size.height,
+			width = cameras[camera_index].image_size.width;
 
+		cout << "camera_index: " << camera_index << endl;
 		for (size_t k = 0; k < height; k++)
 		{
 			cameras[camera_index].image.at<cv::Vec3b>(k, 0) = {0, 0, 255};
@@ -200,20 +203,18 @@ cv::Mat TransformImagesDev(
 					pixel_coordinate.y / horizontal_delta *
 						(new_image_size.width - 1))
 				};
-
-				if (new_image.at<cv::Vec3b>(
-					new_pixel.vertical,
-					new_pixel.horizontal)[2] != 255)
+				
+				if (int(new_image.at<cv::Vec3b>(new_pixel.vertical, new_pixel.horizontal)[2]) != 255)
 				{
 					new_image.at<cv::Vec3b>(
 						new_pixel.vertical,
 						new_pixel.horizontal
 						) =
 						cameras[camera_index].image.at<cv::Vec3b>(i, j);
-				};
-
+				}
 			}
 		}
 	}
+
 	return new_image;
 }

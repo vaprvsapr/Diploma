@@ -71,6 +71,12 @@
     <ClInclude Include="GetNoisy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IsPointInsideATriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculateOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Pictures\Gimp\img.tif">
